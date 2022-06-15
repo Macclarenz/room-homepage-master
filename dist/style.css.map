@@ -1,0 +1,1 @@
+{"version":3,"file":"style.css","mappings":";;;AAAA;EACI;EACA;EACA;AACJ,C","sources":["webpack://room-homepage-master/./src/sass/style.scss"],"sourcesContent":["body {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}"],"names":[],"sourceRoot":""}
