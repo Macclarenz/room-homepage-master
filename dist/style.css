@@ -1,10 +1,234 @@
 /*!**************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/sass/style.scss ***!
   \**************************************************************************************************************/
-body {
+@import url(https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&display=swap);
+/*!******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/sass/style.scss (1) ***!
+  \******************************************************************************************************************/
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:where(.outer-container) h1, h2, p, a, button {
+  font-family: "League Spartan", sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+:where(.header-container) a,
+button {
+  font-size: 12px;
+  font-family: "League Spartan", sans-serif;
+}
+
+.header-container {
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 50vh;
+  padding: 3em 5%;
+  position: relative;
+}
+.header-container .nav-hamburger-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  left: 0;
+  margin-left: 5%;
+}
+.header-container .nav-logo-link {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.nav-modal {
+  background-color: rgba(0, 0, 0, 0.466);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: all 350ms ease-out;
+}
+.nav-modal[open] {
+  pointer-events: all;
+  opacity: 1;
+}
+.nav-modal[open] .nav-list a,
+.nav-modal[open] .nav-close-btn {
+  opacity: 1;
+  transition-delay: 350ms;
+}
+.nav-modal * {
+  pointer-events: all;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2em;
+  background-color: hsl(0deg, 0%, 100%);
+  position: fixed;
+  padding: 2.5em 5%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+nav .nav-close-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  opacity: 0;
+  transition: all 350ms ease;
+}
+nav .nav-close-btn > img {
+  pointer-events: none;
+}
+nav .nav-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2em;
+  list-style: none;
+}
+nav .nav-list a {
+  color: hsl(0deg, 0%, 0%);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 350ms ease;
+  opacity: 0;
+}
+nav {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 350ms ease-out;
+}
+nav[open] {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+@media (min-width: 768px) {
+  .nav-modal {
+    background-color: transparent;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  nav {
+    background-color: transparent;
+    opacity: 1;
+    position: static;
+    transform: scale(1);
+  }
+  nav .nav-close-btn {
+    display: none;
+  }
+  nav .nav-list a {
+    color: hsl(0deg, 0%, 100%);
+    opacity: 1;
+  }
+}
+.main-container {
+  padding-block: 3em;
+  position: relative;
+}
+.main-container > *:not(.arrow-container) {
+  width: 85%;
+  margin: 0 auto;
+}
+.main-container > h1 {
+  font-weight: 700;
+  font-size: 36px;
+  margin-bottom: 0.5em !important;
+}
+.main-container > p {
+  color: hsl(0deg, 0%, 63%);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.main-container > a {
+  color: hsl(0deg, 0%, 0%);
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 10px;
+  margin-top: 2em !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.main-container > a > img {
+  margin-left: 1em;
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+}
+.arrow-container > button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  background-color: hsl(0deg, 0%, 0%);
+  padding: 1.25em 1.5em;
+  transition: all 350ms ease;
+}
+.arrow-container > button > img {
+  transform: scale(0.75);
+}
+.arrow-container > button:where(:focus, :hover) {
+  background-color: hsl(0deg, 0%, 63%);
+}
+
+.about-container {
+  padding-block: 2.5em;
+}
+.about-container > * {
+  width: 85%;
+  margin: 0 auto;
+}
+.about-container > h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+.about-container > p {
+  color: hsl(0deg, 0%, 63%);
+  font-size: 16px;
+  line-height: 1.4;
+  margin-top: 1em !important;
 }
 
 /*# sourceMappingURL=style.css.map*/

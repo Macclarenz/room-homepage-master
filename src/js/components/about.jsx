@@ -5,18 +5,33 @@ import imageDark from '../../../images/image-about-dark.jpg'
 import imageLight from '../../../images/image-about-light.jpg'
 
 export default function () {
-    const [text, setText] = useState({header: 'loading...', paragraph: 'loading...'})
+    const [text, setText] = useState({ header: 'loading...', paragraph: 'loading...' })
+    const [data, setData] = useState(null)
 
     useEffect(() => {
-        fetch('/api/room-homepage')
-            .then(res => res.json())
-            .then(jsonRes => {
-                setText({
-                    header: jsonRes.about.headerText,
-                    paragraph: jsonRes.about.text
-                })
-            })
+        let controller = new AbortController()
+        const fetchingData = async () => {
+            try {
+                const response = await fetch('/api/room-homepage', { signal: controller.signal })
+                if (response.ok) { 
+                    const jsonResponse = await response.json()
+                    setData(jsonResponse)
+                    controller = null
+                }
+            } catch (err) {
+                console.error(err.message)
+            }
+        }
+
+        fetchingData()
+        return () => controller?.abort()
     }, [])
+
+    useEffect(() => {
+        const headerText = data?.about.headerText
+        const paragraphText = data?.about.text
+        setText({header: headerText, paragraph: paragraphText})
+    }, [data])
 
     return (
         <Fragment>

@@ -1,0 +1,23 @@
+@use '../abstracts/' as abs;
+
+.about-container {
+    padding-block: 2.5em;
+
+    & > * {
+        @include abs.centerElement(85%);
+    }
+
+    & > h2 {
+        font-size: 14px;
+        font-weight: abs.$ls-bold;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+    }
+
+    & > p {
+        color: abs.$Dark-Gray;
+        font-size: 16px;
+        line-height: 1.4;
+        margin-top: 1em !important;
+    }
+}

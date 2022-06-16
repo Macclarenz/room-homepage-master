@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&display=swap');
+
+$league-spartan: 'League Spartan', sans-serif;
+$ls-weight: (
+    regular: 500,
+    medium: 600, 
+    bold: 700
+);
+$ls-regular: map-get($ls-weight, regular);
+$ls-medium: map-get($ls-weight, medium);
+$ls-bold: map-get($ls-weight, bold);
+
+$Dark-Gray: hsl(0, 0%, 63%);
+$Black: hsl(0, 0%, 0%);
+$White: hsl(0, 0%, 100%);
+$Very-Dark-Gray: hsl(0, 0%, 27%);
+
+$Mobile: 375px;
+$Desktop: 1440px;
+
+$body-font-size: 12px;

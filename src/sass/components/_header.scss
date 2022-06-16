@@ -1,0 +1,144 @@
+@use '../abstracts/'as abs;
+
+:where(.header-container) a,
+button {
+    font-size: abs.$body-font-size;
+    font-family: abs.$league-spartan;
+}
+
+.header-container {
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 50vh;
+    padding: 3em 5%;
+    position: relative;
+
+    .nav-hamburger-btn {
+        @include abs.resetInput(pointer);
+        position: absolute;
+        left: 0;
+        margin-left: 5%;
+    }
+
+    .nav-logo-link {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+        margin: 0 auto;  
+    }
+}
+
+.nav-modal {
+    background-color: rgba(0, 0, 0, 0.466);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 10;
+
+    // when nav is close
+    opacity: 0;
+    transition: all 350ms ease-out;
+
+    // when nav is open
+    &[open] {
+        pointer-events: all;
+        // cursor: pointer;
+        opacity: 1;
+
+        // when open
+        .nav-list a,
+        .nav-close-btn {
+            opacity: 1;
+            transition-delay: 350ms;
+        }
+    }
+
+    // all the child of nav-modal can be interact
+    & * {
+        pointer-events: all;
+    }
+}
+
+nav {
+    @include abs.flex(space-between, center, row, nowrap, 2em);
+    background-color: abs.$White;
+    position: fixed;
+    padding: 2.5em 5%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+
+    .nav-close-btn {
+        @include abs.resetInput(pointer);
+        display: flex;
+
+        // when close
+        opacity: 0;
+        transition: all 350ms ease;
+
+        & > img {
+            pointer-events: none;
+        }
+    }
+
+    .nav-list {
+        @include abs.flex(space-between, center, row, nowrap, 2em);
+        list-style: none;
+
+        a {
+            color: abs.$Black;
+            font-weight: abs.$ls-bold;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 350ms ease;
+
+            // when close
+            opacity: 0;
+        }
+    }
+
+    // close
+    & {
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: all 350ms ease-out;
+    }
+
+    &[open] {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-modal {
+        background-color: transparent;
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    nav {
+        background-color: transparent;
+        opacity: 1;
+        position: static;
+        transform: scale(1);
+
+        .nav-close-btn {
+            display: none;
+        }
+
+        .nav-list {
+            a {
+                color: abs.$White;
+                opacity: 1;
+            }
+        }
+    }
+}

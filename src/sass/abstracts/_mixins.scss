@@ -1,0 +1,29 @@
+@mixin flex($justify, $align, $direction: row, $wrap: nowrap, $gap: 0) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+    flex-wrap: $wrap;
+    gap: $gap;
+}
+
+@mixin grid($row, $column, $justify: center, $align: center, $gap: 0) {
+    display: grid;
+    grid-template-rows: $row;
+    grid-template-columns: $column;
+    justify-items: $justify;
+    align-items: $align;
+    gap: $gap
+}
+
+@mixin centerElement($width: 90%) {
+    width: $width;
+    margin: 0 auto;
+}
+
+@mixin resetInput($cursor: initial) {
+    background-color: transparent;
+    border: none;
+    cursor: $cursor;
+    outline: none;
+}

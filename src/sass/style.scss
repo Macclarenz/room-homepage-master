@@ -1,7 +1,4 @@
 @use './components/body';
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@use './components/header';
+@use './components/main';
+@use './components/about';

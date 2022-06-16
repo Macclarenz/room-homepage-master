@@ -1,32 +1,16 @@
+@use '../abstracts/' as abs;
 
-
-.outer-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100vw;
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-    border: 1px solid red;
-    display: grid;
-    grid-template: 2fr 1fr / 1fr 2fr 1fr;
-    min-height: 500px;
-    min-width: 500px;
-
-    div {
-        border: 1px solid yellowgreen;
-        text-align: center;
-        padding: 2em;
-
-    }
-
-    .div-1 {
-        grid-column: 1 / 3;
-    }
-
-    .div-4 {
-        // width: 200px;
-    }
+:where(.outer-container) h1, h2, p, a, button {
+    font-family: abs.$league-spartan;
 }
+
+img {
+    max-width: 100%;
+}
+

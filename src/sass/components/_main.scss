@@ -1,0 +1,60 @@
+@use '../abstracts/'as abs;
+
+.main-container {
+    padding-block: 3em;
+    position: relative;
+
+    &>*:not(.arrow-container) {
+        @include abs.centerElement(85%);
+    }
+
+    &>h1 {
+        font-weight: abs.$ls-bold;
+        font-size: 36px;
+        margin-bottom: .5em !important;
+    }
+
+    &>p {
+        color: abs.$Dark-Gray;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    &>a {
+        color: abs.$Black;
+        display: flex;
+        font-size: 14px;
+        font-weight: abs.$ls-medium;
+        letter-spacing: 10px;
+        margin-top: 2em !important;
+        text-decoration: none;
+        text-transform: uppercase;
+
+        &>img {
+            margin-left: 1em;
+        }
+    }
+}
+
+.arrow-container {
+    @include abs.flex(center, center, row);
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+
+    &>button {
+        @include abs.resetInput(pointer);
+        display: flex;
+        background-color: abs.$Black;
+        padding: 1.25em 1.5em;
+        transition: all 350ms ease;
+
+        &>img {
+            transform: scale(.75);
+        }
+
+        &:where(:focus, :hover) {
+            background-color: abs.$Dark-Gray;
+        }
+    }
+}
