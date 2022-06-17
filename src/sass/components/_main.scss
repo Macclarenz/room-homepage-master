@@ -29,9 +29,26 @@
         margin-top: 2em !important;
         text-decoration: none;
         text-transform: uppercase;
+        transition: all 350ms ease;
 
-        &>img {
+        &>svg {
             margin-left: 1em;
+            transition: all 350ms ease-out;
+
+            & > path { transition: all 350ms ease;}
+        }
+
+        &:where(:hover, :focus) {
+            color: abs.$Dark-Gray;
+
+            &>svg {
+                transform: translateX(.5em);
+
+                &>path {
+                    fill: abs.$Dark-Gray;
+                }
+            }
+            
         }
     }
 }
@@ -58,3 +75,35 @@
         }
     }
 }
+
+// Animation
+.main-container > *[class=animate-next] {
+    animation: animate-next 600ms ease;
+
+    @keyframes animate-next {
+        from {
+            opacity: 0;
+            transform: translateX(24px);
+        } to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}
+
+.main-container > *[class=animate-prev] {
+    animation: animate-prev 600ms ease;
+
+    @keyframes animate-prev {
+        from {
+            opacity: 0;
+            transform: translateX(-24px);
+        } to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}
+
+
+

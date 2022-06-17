@@ -12,6 +12,7 @@ button {
     min-height: 50vh;
     padding: 3em 5%;
     position: relative;
+    transition: all 350ms ease-out;
 
     .nav-hamburger-btn {
         @include abs.resetInput(pointer);
@@ -21,16 +22,15 @@ button {
     }
 
     .nav-logo-link {
+        @include abs.centerElement(min(100%, 6em));
         text-align: center;
         display: flex;
         justify-content: center;
-        width: fit-content;
-        margin: 0 auto;  
     }
 }
 
 .nav-modal {
-    background-color: rgba(0, 0, 0, 0.466);
+    background-color: rgba(0, 0, 0, 0.473);
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -38,20 +38,41 @@ button {
     right: 0;
     top: 0;
     bottom: 0;
-    pointer-events: none;
-    z-index: 10;
+    z-index: 1;
+    transition: all 350ms ease;
 
-    // when nav is close
+    // close (mobile)
     opacity: 0;
-    transition: all 350ms ease-out;
+    pointer-events: none;
 
-    // when nav is open
     &[open] {
-        pointer-events: all;
-        // cursor: pointer;
+        opacity: 1;
+        pointer-events: initial;
+    }
+}
+
+nav {
+    @include abs.flex(space-between, center, row, nowrap, 2em);
+    background-color: abs.$White;
+    padding: 2.5em 5%;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    transition: all 500ms ease-out;
+    transform-origin: top;
+
+    // when nav is close (mobile)
+    transform: scaleY(0);
+    opacity: 0;
+
+    &[open] {
+        transform: scaleY(1);
         opacity: 1;
 
-        // when open
+        // when nav is open (mobile)
         .nav-list a,
         .nav-close-btn {
             opacity: 1;
@@ -59,31 +80,16 @@ button {
         }
     }
 
-    // all the child of nav-modal can be interact
-    & * {
-        pointer-events: all;
-    }
-}
-
-nav {
-    @include abs.flex(space-between, center, row, nowrap, 2em);
-    background-color: abs.$White;
-    position: fixed;
-    padding: 2.5em 5%;
-    left: 0;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-
     .nav-close-btn {
         @include abs.resetInput(pointer);
         display: flex;
-
-        // when close
-        opacity: 0;
         transition: all 350ms ease;
 
-        & > img {
+        // when nav is close (mobile)
+        opacity: 0;
+        transition-delay: 0ms;
+
+        &>img {
             pointer-events: none;
         }
     }
@@ -96,48 +102,68 @@ nav {
             color: abs.$Black;
             font-weight: abs.$ls-bold;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 350ms ease;
+            transition-delay: 0ms;
 
-            // when close
+            // when nav is close (mobile)
             opacity: 0;
+
+            &::after {
+                content: '';
+                display: block;
+                background-color: currentColor;
+                height: 2px;
+                width: 100%;
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: all 350ms ease-out;
+            }
+
+            &:where(:hover, :focus)::after {
+                transform: scaleX(1);
+            }
         }
-    }
-
-    // close
-    & {
-        opacity: 0;
-        transform: scaleY(0);
-        transform-origin: top;
-        transition: all 350ms ease-out;
-    }
-
-    &[open] {
-        opacity: 1;
-        transform: scaleY(1);
     }
 }
 
 @media (min-width: 768px) {
-    .nav-modal {
-        background-color: transparent;
-        opacity: 1;
-        transform: scaleY(1);
+
+    .header-container {
+        @include abs.flex(flex-start, flex-start, row, nowrap);
+
+        .nav-hamburger-btn {
+
+        }
+
+        .nav-logo-link {
+            margin-top: .5em;
+        }
     }
+
+    .nav-modal {
+        display: none;
+    }
+
     nav {
         background-color: transparent;
+        transform: scaleY(1);
         opacity: 1;
+        padding: 0;
+        margin-left: 3.5em;
         position: static;
-        transform: scale(1);
 
         .nav-close-btn {
             display: none;
+            opacity: 1;
         }
 
         .nav-list {
+
             a {
                 color: abs.$White;
                 opacity: 1;
+
             }
         }
     }

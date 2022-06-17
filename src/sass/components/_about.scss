@@ -1,23 +1,57 @@
-@use '../abstracts/' as abs;
+@use '../abstracts/'as abs;
 
-.about-container {
+.about-text-container {
     padding-block: 2.5em;
 
-    & > * {
+    &>* {
         @include abs.centerElement(85%);
     }
 
-    & > h2 {
+    &>h2 {
         font-size: 14px;
         font-weight: abs.$ls-bold;
         letter-spacing: 5px;
         text-transform: uppercase;
     }
 
-    & > p {
+    &>p {
         color: abs.$Dark-Gray;
         font-size: 16px;
         line-height: 1.4;
         margin-top: 1em !important;
+    }
+
+    @keyframes animate_image {
+        from {
+            opacity: 0;
+        } to {
+            opacity: 1;
+        }
+    }
+}
+
+@media (min-width: 375px) {
+    .image-about-container-dark,
+    .image-about-container-light {
+        display: flex;
+        justify-content: center;
+        min-width: 375px;
+        min-height: 250px;
+    }
+}
+
+@media (min-width: 768px) {
+    .image-about-container-dark,
+    .image-about-container-light {
+        display: flex;
+        margin-inline: 7.5%;
+    }
+
+    .image-about-container-dark {
+        justify-content: flex-start;
+    }
+
+    .image-about-container-light {
+        justify-content: center;
     }
 }

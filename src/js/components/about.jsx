@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
+import { animate_aboutText } from "../animation";
 
 // images or icons
 import imageDark from '../../../images/image-about-dark.jpg'
@@ -13,8 +14,9 @@ export default function () {
         const fetchingData = async () => {
             try {
                 const response = await fetch('/api/room-homepage', { signal: controller.signal })
-                if (response.ok) { 
+                if (response.ok) {
                     const jsonResponse = await response.json()
+                    animate_aboutText()
                     setData(jsonResponse)
                     controller = null
                 }
@@ -30,21 +32,27 @@ export default function () {
     useEffect(() => {
         const headerText = data?.about.headerText
         const paragraphText = data?.about.text
-        setText({header: headerText, paragraph: paragraphText})
+        setText({ header: headerText, paragraph: paragraphText })
     }, [data])
 
+    useEffect(() => {
+        // animate_aboutImage()
+    })
+
     return (
-        <Fragment>
-            <div className="image-about-container-light">
+
+        <div className="about-container">
+            <div className="image-about-container-dark">
                 <img src={imageDark} alt="dark furniture" />
             </div>
-            <div className="about-container">
+            <div className="about-text-container">
                 <h2>{text.header}</h2>
                 <p>{text.paragraph}</p>
             </div>
-            <div className="image-about-container-dark">
+            <div className="image-about-container-light">
                 <img src={imageLight} alt="light furniture" />
             </div>
-        </Fragment>
+        </div>
+
     )
 }

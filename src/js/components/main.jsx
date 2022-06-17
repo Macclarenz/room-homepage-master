@@ -1,8 +1,9 @@
 import { useState, useEffect, Fragment } from "react";
+import { animate_mainText } from "../animation";
 
 // images and icons
 import logo from '../../../images/logo.svg'
-import arrow from '../../../images/icon-arrow.svg'
+// import arrow from '../../../images/icon-arrow.svg'
 import leftArrow from '../../../images/icon-angle-left.svg'
 import rightArrow from '../../../images/icon-angle-right.svg'
 import navHamburger from '../../../images/icon-hamburger.svg'
@@ -67,7 +68,6 @@ function Header() {
     const handleResize = ({ target }) => {
         const headerContainer = document.querySelector('.header-container')
         const setHeroImage = heroImages[count]
-
         if (target.innerWidth >= 768) return headerContainer.style.backgroundImage = `url(${setHeroImage.desktop})`
         else return headerContainer.style.backgroundImage = `url(${setHeroImage.mobile})`
     }
@@ -92,8 +92,13 @@ function Header() {
 
     const handleClick = ({ target }) => {
         const dataLength = data.body.length
-        if (target.name === 'next') return setCount(prevCount => prevCount === dataLength - 1 ? prevCount = 0 : prevCount + 1)
-        else return setCount(prevCount => prevCount === 0 ? prevCount = dataLength - 1 : prevCount - 1)
+        if (target.name === 'next') {
+            animate_mainText(target.name)
+            return setCount(prevCount => prevCount === dataLength - 1 ? prevCount = 0 : prevCount + 1)
+        } else {
+            animate_mainText(target.name)
+            return setCount(prevCount => prevCount === 0 ? prevCount = dataLength - 1 : prevCount - 1)
+        }
     }
 
     // nav hamburger
@@ -113,22 +118,13 @@ function Header() {
     }, [])
 
     const handleClick_navClose = () => {
-        const navModal = document.querySelector('.nav-modal')
-        const navContainer = navModal.querySelector('nav')
-
-        navContainer.removeAttribute('open')
-        navModal.removeAttribute('open')
-
-        return
+        const navEl = document.querySelectorAll('header nav, .nav-modal')
+        navEl.forEach(el => el.removeAttribute('open'))
     }
 
     const handleClick_navOpen = () => {
-        const navModal = document.querySelector('.nav-modal')
-        const navContainer = navModal.querySelector('nav')
-
-        navContainer.setAttribute('open','')
-        navModal.setAttribute('open','')
-        return
+        const navEl = document.querySelectorAll('header nav, .nav-modal')
+        navEl.forEach(el => el.setAttribute('open', ''))
     }
 
     return (
@@ -136,20 +132,19 @@ function Header() {
             <header className="header-container" >
                 <button className="nav-hamburger-btn" type="submit" onClick={handleClick_navOpen}><img src={navHamburger} alt="nav hamburger icon" /></button>
                 <a href="#home" className="nav-logo-link"><img src={logo} alt="brand logo" /></a>
-                <div className="nav-modal">
-                    <nav>
-                        <button type="submit" className="nav-close-btn" onClick={handleClick_navClose}><img src={navClose} alt="x icon" /></button>
-                        <ul className="nav-list">
-                            {navEl}
-                        </ul>
-                    </nav>
-                </div>
-
+                <div className="nav-modal" onClick={handleClick_navClose}></div>
+                <nav>
+                    <button type="submit" className="nav-close-btn" onClick={handleClick_navClose}><img src={navClose} alt="x icon" /></button>
+                    <ul className="nav-list">
+                        {navEl}
+                    </ul>
+                </nav>
             </header>
             <main className="main-container">
                 <h1>{text.header}</h1>
                 <p>{text.paragraph}</p>
-                <a href="#">shop now <img src={arrow} alt="arrow link" /></a>
+                <a href="#">shop now <svg width="40" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M34.05 0l5.481 5.527h.008v.008L40 6l-.461.465v.063l-.062-.001L34.049 12l-.662-.668 4.765-4.805H0v-1h38.206l-4.82-4.86L34.05 0z" fill="#000" fillRule="nonzero" /></svg>
+                </a>
                 <div className="arrow-container">
                     <button type="submit" className="left-arrow-btn" name="prev" onClick={handleClick}><img src={leftArrow} alt="left arrow icon" /></button>
                     <button type="submit" className="right-arrow-btn" name="next" onClick={handleClick}><img src={rightArrow} alt="right arrow icon" /></button>

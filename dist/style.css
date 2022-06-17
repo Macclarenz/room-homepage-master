@@ -19,6 +19,55 @@ img {
   max-width: 100%;
 }
 
+@media (min-width: 1024px) {
+  .outer-container {
+    height: 100vh;
+    max-width: 100vw;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    grid-template-columns: 60% 40%;
+    justify-items: center;
+    align-items: center;
+    gap: 0;
+  }
+  .outer-container .header-container {
+    justify-self: stretch;
+    align-self: stretch;
+  }
+  .outer-container .main-container {
+    justify-self: stretch;
+    align-self: stretch;
+    padding: 20% 10%;
+  }
+  .outer-container .main-container .arrow-container {
+    top: initial;
+    bottom: 0;
+    left: 0;
+    right: initial;
+  }
+  .outer-container .about-container {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0;
+    grid-column: 1/-1;
+  }
+  .outer-container .about-container .image-about-container-dark,
+.outer-container .about-container .image-about-container-light {
+    margin-inline: 0;
+    flex: 1 2 29%;
+  }
+  .outer-container .about-container .image-about-container-dark img,
+.outer-container .about-container .image-about-container-light img {
+    width: 100%;
+  }
+  .outer-container .about-container .about-text-container {
+    flex: 2 1 42.5%;
+    align-self: center;
+  }
+}
 :where(.header-container) a,
 button {
   font-size: 12px;
@@ -31,6 +80,7 @@ button {
   min-height: 50vh;
   padding: 3em 5%;
   position: relative;
+  transition: all 350ms ease-out;
 }
 .header-container .nav-hamburger-btn {
   background-color: transparent;
@@ -42,15 +92,15 @@ button {
   margin-left: 5%;
 }
 .header-container .nav-logo-link {
+  width: min(100%, 6em);
+  margin: 0 auto;
   text-align: center;
   display: flex;
   justify-content: center;
-  width: fit-content;
-  margin: 0 auto;
 }
 
 .nav-modal {
-  background-color: rgba(0, 0, 0, 0.466);
+  background-color: rgba(0, 0, 0, 0.473);
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -58,22 +108,14 @@ button {
   right: 0;
   top: 0;
   bottom: 0;
-  pointer-events: none;
-  z-index: 10;
+  z-index: 1;
+  transition: all 350ms ease;
   opacity: 0;
-  transition: all 350ms ease-out;
+  pointer-events: none;
 }
 .nav-modal[open] {
-  pointer-events: all;
   opacity: 1;
-}
-.nav-modal[open] .nav-list a,
-.nav-modal[open] .nav-close-btn {
-  opacity: 1;
-  transition-delay: 350ms;
-}
-.nav-modal * {
-  pointer-events: all;
+  pointer-events: initial;
 }
 
 nav {
@@ -84,12 +126,26 @@ nav {
   flex-wrap: nowrap;
   gap: 2em;
   background-color: hsl(0deg, 0%, 100%);
-  position: fixed;
   padding: 2.5em 5%;
-  left: 0;
-  top: 0;
+  position: fixed;
   width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
   z-index: 10;
+  transition: all 500ms ease-out;
+  transform-origin: top;
+  transform: scaleY(0);
+  opacity: 0;
+}
+nav[open] {
+  transform: scaleY(1);
+  opacity: 1;
+}
+nav[open] .nav-list a,
+nav[open] .nav-close-btn {
+  opacity: 1;
+  transition-delay: 350ms;
 }
 nav .nav-close-btn {
   background-color: transparent;
@@ -97,8 +153,9 @@ nav .nav-close-btn {
   cursor: pointer;
   outline: none;
   display: flex;
-  opacity: 0;
   transition: all 350ms ease;
+  opacity: 0;
+  transition-delay: 0ms;
 }
 nav .nav-close-btn > img {
   pointer-events: none;
@@ -116,35 +173,51 @@ nav .nav-list a {
   color: hsl(0deg, 0%, 0%);
   font-weight: 700;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   transition: all 350ms ease;
+  transition-delay: 0ms;
   opacity: 0;
 }
-nav {
-  opacity: 0;
-  transform: scaleY(0);
-  transform-origin: top;
+nav .nav-list a::after {
+  content: "";
+  display: block;
+  background-color: currentColor;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
   transition: all 350ms ease-out;
 }
-nav[open] {
-  opacity: 1;
-  transform: scaleY(1);
+nav .nav-list a:where(:hover, :focus)::after {
+  transform: scaleX(1);
 }
 
 @media (min-width: 768px) {
+  .header-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+  .header-container .nav-logo-link {
+    margin-top: 0.5em;
+  }
   .nav-modal {
-    background-color: transparent;
-    opacity: 1;
-    transform: scaleY(1);
+    display: none;
   }
   nav {
     background-color: transparent;
+    transform: scaleY(1);
     opacity: 1;
+    padding: 0;
+    margin-left: 3.5em;
     position: static;
-    transform: scale(1);
   }
   nav .nav-close-btn {
     display: none;
+    opacity: 1;
   }
   nav .nav-list a {
     color: hsl(0deg, 0%, 100%);
@@ -178,9 +251,23 @@ nav[open] {
   margin-top: 2em !important;
   text-decoration: none;
   text-transform: uppercase;
+  transition: all 350ms ease;
 }
-.main-container > a > img {
+.main-container > a > svg {
   margin-left: 1em;
+  transition: all 350ms ease-out;
+}
+.main-container > a > svg > path {
+  transition: all 350ms ease;
+}
+.main-container > a:where(:hover, :focus) {
+  color: hsl(0deg, 0%, 63%);
+}
+.main-container > a:where(:hover, :focus) > svg {
+  transform: translateX(0.5em);
+}
+.main-container > a:where(:hover, :focus) > svg > path {
+  fill: hsl(0deg, 0%, 63%);
 }
 
 .arrow-container {
@@ -211,24 +298,83 @@ nav[open] {
   background-color: hsl(0deg, 0%, 63%);
 }
 
-.about-container {
+.main-container > *[class=animate-next] {
+  animation: animate-next 600ms ease;
+}
+@keyframes animate-next {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.main-container > *[class=animate-prev] {
+  animation: animate-prev 600ms ease;
+}
+@keyframes animate-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.about-text-container {
   padding-block: 2.5em;
 }
-.about-container > * {
+.about-text-container > * {
   width: 85%;
   margin: 0 auto;
 }
-.about-container > h2 {
+.about-text-container > h2 {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 5px;
   text-transform: uppercase;
 }
-.about-container > p {
+.about-text-container > p {
   color: hsl(0deg, 0%, 63%);
   font-size: 16px;
   line-height: 1.4;
   margin-top: 1em !important;
+}
+@keyframes animate_image {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 375px) {
+  .image-about-container-dark,
+.image-about-container-light {
+    display: flex;
+    justify-content: center;
+    min-width: 375px;
+    min-height: 250px;
+  }
+}
+@media (min-width: 768px) {
+  .image-about-container-dark,
+.image-about-container-light {
+    display: flex;
+    margin-inline: 7.5%;
+  }
+  .image-about-container-dark {
+    justify-content: flex-start;
+  }
+  .image-about-container-light {
+    justify-content: center;
+  }
 }
 
 /*# sourceMappingURL=style.css.map*/
